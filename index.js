@@ -24,7 +24,7 @@ const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
-
+// Это функция реализации выхода из приложения(из профиля)
 export const logout = () => {
   user = null;
   removeUserFromLocalStorage();
