@@ -23,7 +23,7 @@ export function getPosts({ token }) {
     });
 }
 
-export function newGetPost({ token, description, imageUrl }) {
+export function postNewPost({ token, description, imageUrl }) {
   return fetch(postsHost, {
     method: "POST",
     headers: {
@@ -43,6 +43,23 @@ export function newGetPost({ token, description, imageUrl }) {
       alert("Введите описание или добавьте картинку")
     }
   })
+
+}
+
+export function postGetUser({ token, userId }) {
+  return fetch(postsHost + `/user-posts/${userId}`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+    }
+  })
+    .then((response) => {
+      console.log(userId);
+      return response.json()
+    })
+    .then((responseData) => {
+      return responseData.posts
+    })
 
 }
 

@@ -10,7 +10,7 @@ export function renderPostsPageComponent({ appEl }) {
 
   const postHTML = posts.map((item) => {
     return `                  <li class="post">
-    <div class="post-header" data-user-id="642d00329b190443860c2f31">
+    <div class="post-header" data-user-id="${item.user.id}">
         <img src="${item.user.imageUrl}" class="post-header__user-image">
         <p class="post-header__user-name">${item.user.name}</p>
     </div>
