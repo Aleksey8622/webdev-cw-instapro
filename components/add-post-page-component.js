@@ -20,10 +20,11 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     appEl.innerHTML = appHtml;
 
     document.getElementById("add-button").addEventListener("click", () => {
-      const inputElement = getElementById('comment-input')
+      const inputElement = document.getElementById('comment-input')
       onAddPostClick({
         description: inputElement.value,
         imageUrl: imageUrl,
+        
       });
     });
   };
