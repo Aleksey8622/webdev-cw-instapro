@@ -39,7 +39,9 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       element: appEl.querySelector(".upload-image-container"),
       onImageUrlChange(newImageUrl) {
         imageUrl = newImageUrl;
+       
       },
+      
     });
   }
 }

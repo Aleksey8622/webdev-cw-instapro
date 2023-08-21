@@ -31,6 +31,9 @@ export const logout = () => {
   goToPage(POSTS_PAGE);
 };
 
+
+
+
 /**
  * Включает страницу приложения
  */
@@ -57,7 +60,11 @@ export const goToPage = (newPage, data) => {
       return getPosts({ token: getToken() })
         .then((newPosts) => {
           page = POSTS_PAGE;
+          console.log("🚀 ~ file: index.js:60 ~ .then ~ page:", page)
+          
           posts = newPosts;
+          console.log("🚀 ~ file: index.js:63 ~ .then ~ posts:", posts)
+          
           renderApp();
         })
         .catch((error) => {
