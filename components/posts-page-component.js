@@ -1,15 +1,15 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
-
+import { posts, goToPage, getLikes } from "../index.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
 
   console.log("Актуальный список постов:", posts);
 
-  const postHTML = posts.map((item) => {
-    return `                  <li class="post">
+  const postHTML = posts
+    .map((item) => {
+      return `                  <li class="post">
     <div class="post-header" data-user-id="${item.user.id}">
         <img src="${item.user.imageUrl}" class="post-header__user-image">
         <p class="post-header__user-name">${item.user.name}</p>
@@ -19,10 +19,14 @@ export function renderPostsPageComponent({ appEl }) {
     </div>
     <div class="post-likes">
       <button data-post-id="${item.id}" class="like-button">
-        <img src="${(item.isLiked) ? './assets/images/like-active.svg' : './assets/images/like-not-active.svg'}">
+        <img src="${
+          item.isLiked
+            ? "./assets/images/like-active.svg"
+            : "./assets/images/like-not-active.svg"
+        }">
       </button>
       <p class="post-likes-text">
-        Нравится: <strong>0</strong>
+        Нравится: <strong>${item.likes.name}</strong>
       </p>
     </div>
     <p class="post-text">
@@ -32,8 +36,9 @@ export function renderPostsPageComponent({ appEl }) {
     <p class="post-date">
       19 минут назад
     </p>
-  </li>`
-  }).join("");
+  </li>`;
+    })
+    .join("");
 
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
@@ -58,6 +63,12 @@ export function renderPostsPageComponent({ appEl }) {
       goToPage(USER_POSTS_PAGE, {
         userId: userEl.dataset.userId,
       });
+    });
+  }
+
+  for (let likesEl of document.querySelectorAll(".like-button")) {
+    likesEl.addEventListener("click", () => {
+      getLikes({ postIndex: likesEl.dataset.postId });
     });
   }
 }

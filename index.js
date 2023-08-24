@@ -1,4 +1,10 @@
-import { getPosts, postGetUser, postNewPost } from "./api.js";
+import {
+  getPosts,
+  postGetUser,
+  postNewPost,
+  postLikes,
+  postDisLikes,
+} from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -31,8 +37,19 @@ export const logout = () => {
   goToPage(POSTS_PAGE);
 };
 
+export function getLikes({ postIndex }) {
+  const index = posts.findIndex((post) => post.id === postIndex);
 
-
+  if (posts[index].isLiked) {
+    postDisLikes({ token: getToken(), id: postIndex });
+    posts[index].isLiked = false;
+    renderApp();
+  } else {
+    posts[index].isLiked = true;
+    postLikes({ token: getToken(), id: postIndex });
+    renderApp();
+  }
+}
 
 /**
  * Включает страницу приложения
@@ -60,11 +77,11 @@ export const goToPage = (newPage, data) => {
       return getPosts({ token: getToken() })
         .then((newPosts) => {
           page = POSTS_PAGE;
-          console.log("🚀 ~ file: index.js:60 ~ .then ~ page:", page)
-          
+          console.log("🚀 ~ file: index.js:60 ~ .then ~ page:", page);
+
           posts = newPosts;
-          console.log("🚀 ~ file: index.js:63 ~ .then ~ posts:", posts)
-          
+          console.log("🚀 ~ file: index.js:63 ~ .then ~ posts:", posts);
+
           renderApp();
         })
         .catch((error) => {
@@ -76,20 +93,17 @@ export const goToPage = (newPage, data) => {
     if (newPage === USER_POSTS_PAGE) {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
-      page = LOADING_PAGE
+      page = LOADING_PAGE;
       renderApp();
 
       return postGetUser({
         token: getToken(),
-        userId: data.userId
-      })
-        .then((newPosts) => {
-          page = USER_POSTS_PAGE;
-          posts = newPosts
-          renderApp();
-          
-
-        })
+        userId: data.userId,
+      }).then((newPosts) => {
+        page = USER_POSTS_PAGE;
+        posts = newPosts;
+        renderApp();
+      });
     }
 
     page = newPage;
@@ -129,7 +143,7 @@ const renderApp = () => {
       appEl,
       onAddPostClick({ description, imageUrl }) {
         // TODO: реализовать добавление поста в API
-        postNewPost({ token: getToken(), description, imageUrl })
+        postNewPost({ token: getToken(), description, imageUrl });
 
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
@@ -148,7 +162,7 @@ const renderApp = () => {
     // appEl.innerHTML = "Здесь будет страница фотографий пользователя";
     return renderPostsPageComponent({
       appEl,
-    })
+    });
   }
 };
 
