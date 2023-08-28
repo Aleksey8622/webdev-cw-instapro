@@ -26,7 +26,7 @@ export function renderPostsPageComponent({ appEl }) {
         }">
       </button>
       <p class="post-likes-text">
-        Нравится: <strong>${item.likes.name}</strong>
+        Нравится: <strong>${item.likes.length}</strong>
       </p>
     </div>
     <p class="post-text">

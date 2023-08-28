@@ -39,13 +39,16 @@ export const logout = () => {
 
 export function getLikes({ postIndex }) {
   const index = posts.findIndex((post) => post.id === postIndex);
+  const likesElement = document.querySelector(".post-likes-text");
 
   if (posts[index].isLiked) {
     postDisLikes({ token: getToken(), id: postIndex });
     posts[index].isLiked = false;
+    posts[index].likes.length -= 1
     renderApp();
   } else {
     posts[index].isLiked = true;
+    posts[index].likes.length += 1
     postLikes({ token: getToken(), id: postIndex });
     renderApp();
   }
