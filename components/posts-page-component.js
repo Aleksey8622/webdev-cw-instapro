@@ -1,12 +1,13 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, getLikes } from "../index.js";
+import { format } from "date-fns";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
 
   console.log("Актуальный список постов:", posts);
-
+  const now = new Date()
   const postHTML = posts
     .map((item) => {
       return `                  <li class="post">
@@ -34,7 +35,7 @@ export function renderPostsPageComponent({ appEl }) {
       ${item.description}
     </p>
     <p class="post-date">
-      19 минут назад
+      ${format(now, "dd/MM/yyyy hh.mm")}
     </p>
   </li>`;
     })
