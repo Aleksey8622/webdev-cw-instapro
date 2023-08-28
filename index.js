@@ -37,19 +37,19 @@ export const logout = () => {
   goToPage(POSTS_PAGE);
 };
 
-export function getLikes({ postIndex }) {
-  const index = posts.findIndex((post) => post.id === postIndex);
-  const likesElement = document.querySelector(".post-likes-text");
+export function getLikes({ postId }) {
+  const index = posts.findIndex((post) => post.id === postId);
 
   if (posts[index].isLiked) {
-    postDisLikes({ token: getToken(), id: postIndex });
+    postDisLikes({ token: getToken(), id: postId });
+    posts[index].likes.length = posts[index].likes.length -= 1;
     posts[index].isLiked = false;
-    posts[index].likes.length -= 1
     renderApp();
   } else {
+    postLikes({ token: getToken(), id: postId });
+    console.log(postLikes({ token: getToken(), id: postId }));
+    posts[index].likes.length = posts[index].likes.length + 1;
     posts[index].isLiked = true;
-    posts[index].likes.length += 1
-    postLikes({ token: getToken(), id: postIndex });
     renderApp();
   }
 }
