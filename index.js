@@ -39,7 +39,11 @@ export const logout = () => {
 
 export function getLikes({ postId }) {
   const index = posts.findIndex((post) => post.id === postId);
-
+  console.log(getToken());
+  if (!getToken()) {
+    alert("Авторизируйтесь, что бы лайкать посты!");
+    return;
+  }
   if (posts[index].isLiked) {
     postDisLikes({ token: getToken(), id: postId });
     // console.log(postDisLikes({ token: getToken(), id: postId }));
