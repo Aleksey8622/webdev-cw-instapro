@@ -85,9 +85,6 @@ export function postLikes({ token, id }) {
       if (response.status !== 200) {
         throw new Error("Авторизируйтесь, что бы лайкать посты!");
       }
-      console.log(id);
-      console.log(token);
-      console.log(response);
       return response.json();
     })
     .catch((error) => {

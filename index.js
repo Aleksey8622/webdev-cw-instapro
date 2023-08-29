@@ -42,13 +42,12 @@ export function getLikes({ postId }) {
 
   if (posts[index].isLiked) {
     postDisLikes({ token: getToken(), id: postId });
-    posts[index].likes.length = posts[index].likes.length -= 1;
+    posts[index].likes.length = response.posts[index].likes.length--;
     posts[index].isLiked = false;
     renderApp();
   } else {
     postLikes({ token: getToken(), id: postId });
-    console.log(postLikes({ token: getToken(), id: postId }));
-    posts[index].likes.length = posts[index].likes.length + 1;
+    posts[index].likes.length = response.posts[index].likes.length++;
     posts[index].isLiked = true;
     renderApp();
   }
