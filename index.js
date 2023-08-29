@@ -42,12 +42,14 @@ export function getLikes({ postId }) {
 
   if (posts[index].isLiked) {
     postDisLikes({ token: getToken(), id: postId });
-    posts[index].likes.length = response.posts[index].likes.length--;
+    // console.log(postDisLikes({ token: getToken(), id: postId }));
+    posts[index].likes.length = posts[index].likes.length - 1;
     posts[index].isLiked = false;
     renderApp();
   } else {
     postLikes({ token: getToken(), id: postId });
-    posts[index].likes.length = response.posts[index].likes.length++;
+    // console.log(postLikes({ token: getToken(), id: postId }));
+    posts[index].likes.length = posts[index].likes.length + 1;
     posts[index].isLiked = true;
     renderApp();
   }
@@ -79,10 +81,10 @@ export const goToPage = (newPage, data) => {
       return getPosts({ token: getToken() })
         .then((newPosts) => {
           page = POSTS_PAGE;
-          console.log("🚀 ~ file: index.js:60 ~ .then ~ page:", page);
+          // console.log("🚀 ~ file: index.js:60 ~ .then ~ page:", page);
 
           posts = newPosts;
-          console.log("🚀 ~ file: index.js:63 ~ .then ~ posts:", posts);
+          // console.log("🚀 ~ file: index.js:63 ~ .then ~ posts:", posts);
 
           renderApp();
         })
